@@ -1,21 +1,15 @@
 """
 Called from `main.py`. Ties everything together.
 """
-from operator import attrgetter
 from optimizer import Optimizer
-from random import shuffle
 from tqdm import tqdm
-from statistics import mean
-import random
-import sys
-import timeit
 
 def train_networks(networks):
     """Train each network.
-    
+
     Args:
         networks (list): Current population of networks.
-    
+
     """
     pbar = tqdm(total=len(networks))
     for network in networks:
@@ -25,13 +19,13 @@ def train_networks(networks):
 
 def get_average_accuracy(networks):
     """Get the average accuracy for a group of networks.
-    
+
     Args:
         networks (list): List of networks.
-    
+
     Returns:
         float: The average accuracy of a population of networks.
-    
+
     """
     total_accuracy = 0
     for network in networks:
@@ -41,15 +35,13 @@ def get_average_accuracy(networks):
 
 def generate(generations, population, neuron_choices, max_layers):
     """Generate a network with the genetic algorithm.
-    
+
     Args:
         generations (int): Number of times to evole the population.
         population (int): Number of networks in each generation.
         neuron_choices (list): A list of possible layer widths.
-    
-    """
-    choice = None
 
+    """
     optimizer = Optimizer(neuron_choices, max_layers)
     networks = optimizer.create_population(population)
 
@@ -72,7 +64,7 @@ def generate(generations, population, neuron_choices, max_layers):
         if i != generations - 1:
             # Do the evolution.
             networks = optimizer.evolve(networks)
-        
+
     # Sort our final population.
     networks = sorted(networks, key=lambda x: x.accuracy, reverse=True)
 
@@ -89,4 +81,3 @@ def print_networks(networks):
     print('-'*80)
     for network in networks:
         network.print_network()
-

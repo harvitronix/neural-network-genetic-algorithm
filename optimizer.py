@@ -8,13 +8,12 @@ Credit:
 from functools import reduce
 from operator import add
 import random
-import sys
 from network import Network
 
 class Optimizer():
     """Class that implements genetic algorithm for MLP optimization."""
 
-    def __init__(self, neuron_choices, max_layers, retain=0.6, 
+    def __init__(self, neuron_choices, max_layers, retain=0.6,
                  random_select=0.05, mutate_chance=0.005):
         """Create an optimizer with default options."""
         self.mutate_chance = mutate_chance
@@ -32,7 +31,8 @@ class Optimizer():
             pop.append(network)
         return pop
 
-    def fitness(self, network):
+    @staticmethod
+    def fitness(network):
         """Return the accuracy, which is our fitness function."""
         return network.accuracy
 

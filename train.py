@@ -11,7 +11,6 @@ TODO:
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
-from keras.optimizers import RMSprop
 from keras.utils.np_utils import to_categorical
 from keras.callbacks import EarlyStopping
 
@@ -69,10 +68,10 @@ def compile_model(network):
 
 def train_and_score(network):
     """Train the model, return test loss.
-    
+
     Args:
         network (list): a list of layers.
-    
+
     """
     model = compile_model(network)
 
@@ -89,4 +88,3 @@ def train_and_score(network):
     #print("Test accuracy: %.2f%%" % (score[1] * 100))
 
     return score[1]  # 1 is accuracy. 0 is loss.
-

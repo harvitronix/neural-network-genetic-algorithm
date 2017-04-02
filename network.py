@@ -1,18 +1,16 @@
-import csv
+"""Class that represents the network to be evolved."""
 import random
-import sys
-from tabulate import tabulate
 from train import train_and_score
 
 class Network():
     """Represent a network and let us operate on it.
-    
+
     Currently only works for an MLP.
     """
 
     def __init__(self, neuron_choices, max_layers=4):
         """Initialize our network.
-        
+
         Args:
             neuron_choices (list): List of available layer widths
                 For example, [24, 32, 512, 1024]
@@ -37,10 +35,10 @@ class Network():
 
     def create_set_network(self, network):
         """Set network properties.
-        
+
         Args:
             network (list): List of neurons per layer.
-        
+
         """
         self.network = network
 
