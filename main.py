@@ -3,7 +3,7 @@ from generate import generate
 
 def main():
     """Evolve a network."""
-    generations = 10  # Number of times to evole the population.
+    generations = 5  # Number of times to evole the population.
     population = 20  # Number of networks in each generation.
 
     neuron_choices = [4, 8, 24, 128]

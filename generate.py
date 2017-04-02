@@ -4,6 +4,7 @@ Called from `main.py`. Ties everything together.
 from operator import attrgetter
 from optimizer import Optimizer
 from random import shuffle
+from tqdm import tqdm
 from statistics import mean
 import random
 import sys
@@ -16,8 +17,11 @@ def train_networks(networks):
         networks (list): Current population of networks.
     
     """
+    pbar = tqdm(total=len(networks))
     for network in networks:
         network.train_network()
+        pbar.update(1)
+    pbar.close()
 
 def get_average_accuracy(networks):
     """Get the average accuracy for a group of networks.
@@ -61,7 +65,6 @@ def generate(generations, population, neuron_choices):
         average_accuracy = get_average_accuracy(networks)
 
         # Print out the average accuracy each generation.
-        print('-'*80)
         print("Generation average: %.2f%%" % (average_accuracy * 100))
         print('-'*80)
 

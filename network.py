@@ -49,4 +49,5 @@ class Network():
 
     def print_network(self):
         """Print out a network."""
+        print(network.network)
         print("Network accuracy: %.2f%%" % (self.accuracy * 100))
