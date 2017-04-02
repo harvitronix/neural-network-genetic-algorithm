@@ -22,18 +22,19 @@ class Network():
         self.max_layers = max_layers
         self.network = []  # (list): represents MLP network
 
-    def create_random_network(self):
+    def create_random(self):
         """Create a random network."""
 
         # Start with random number of layers.
         nb_layers = random.randint(1, self.max_layers)
 
-        # For each layer, get random number of neurons.
-        for _ in range(nb_layers):
-            nb_neurons = random.choice(self.neuron_choices)
-            self.network.append(nb_neurons)
+        # Get a random number of neurons for the layers.
+        nb_neurons = random.choice(self.neuron_choices)
 
-    def create_set_network(self, network):
+        # Now build our network list.
+        self.network = [nb_neurons for _ in range(nb_layers)]
+
+    def create_set(self, network):
         """Set network properties.
 
         Args:
@@ -42,12 +43,12 @@ class Network():
         """
         self.network = network
 
-    def train_network(self):
+    def train(self):
         """Train the network and record the accuracy."""
         if self.accuracy == 0.:
             self.accuracy = train_and_score(self.network)
 
-    def print_network(self):
+    def print(self):
         """Print out a network."""
         print(self.network)
         print("Network accuracy: %.2f%%" % (self.accuracy * 100))

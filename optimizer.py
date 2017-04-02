@@ -27,7 +27,7 @@ class Optimizer():
         pop = []
         for _ in range(0, count):
             network = Network(self.neuron_choices, self.max_layers)
-            network.create_random_network()
+            network.create_random()
             pop.append(network)
         return pop
 
@@ -65,7 +65,7 @@ class Optimizer():
 
             # Now create a network object.
             network = Network(self.neuron_choices, self.max_layers)
-            network.create_set_network(child)
+            network.create_set(child)
 
             children.append(network)
 

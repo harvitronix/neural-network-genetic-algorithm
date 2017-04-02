@@ -4,9 +4,6 @@ Utility used by the Network class to actually train.
 Based on:
     https://github.com/fchollet/keras/blob/master/examples/mnist_mlp.py
 
-TODO:
-* Use early stopping instead of a set epoch
-* Parameterize everything
 """
 from keras.datasets import mnist
 from keras.models import Sequential
@@ -52,9 +49,9 @@ def compile_model(network):
 
         # Need input shape for first layer.
         if i == 0:
-            model.add(Dense(neurons, input_shape=input_shape))
+            model.add(Dense(neurons, activation='relu', input_shape=input_shape))
         else:
-            model.add(Dense(neurons))
+            model.add(Dense(neurons, activation='relu'))
 
         model.add(Dropout(0.2))  # hard-coded dropout
 
