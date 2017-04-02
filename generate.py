@@ -39,7 +39,7 @@ def get_average_accuracy(networks):
 
     return total_accuracy / len(networks)
 
-def generate(generations, population, neuron_choices):
+def generate(generations, population, neuron_choices, max_layers):
     """Generate a network with the genetic algorithm.
     
     Args:
@@ -50,7 +50,7 @@ def generate(generations, population, neuron_choices):
     """
     choice = None
 
-    optimizer = Optimizer(neuron_choices)
+    optimizer = Optimizer(neuron_choices, max_layers)
     networks = optimizer.create_population(population)
 
     # Evolve the generation.
@@ -86,7 +86,7 @@ def print_networks(networks):
         networks (list of lists): A list of networks.
 
     """
+    print('-'*80)
     for network in networks:
-        print('-'*80)
         network.print_network()
 

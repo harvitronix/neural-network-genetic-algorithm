@@ -10,23 +10,25 @@ class Network():
     Currently only works for an MLP.
     """
 
-    def __init__(self, neuron_choices):
+    def __init__(self, neuron_choices, max_layers=4):
         """Initialize our network.
         
         Args:
             neuron_choices (list): List of available layer widths
                 For example, [24, 32, 512, 1024]
+            max_layers (int): Maximum depth of the network
 
         """
         self.accuracy = 0.
         self.neuron_choices = neuron_choices
+        self.max_layers = max_layers
         self.network = []  # (list): represents MLP network
 
     def create_random_network(self):
         """Create a random network."""
 
         # Start with random number of layers.
-        nb_layers = random.randint(1, 10)
+        nb_layers = random.randint(1, self.max_layers)
 
         # For each layer, get random number of neurons.
         for _ in range(nb_layers):
@@ -49,5 +51,5 @@ class Network():
 
     def print_network(self):
         """Print out a network."""
-        print(network.network)
+        print(self.network)
         print("Network accuracy: %.2f%%" % (self.accuracy * 100))

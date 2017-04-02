@@ -57,7 +57,7 @@ def compile_model(network):
         else:
             model.add(Dense(neurons))
 
-        model.add(Dropout(0.5))
+        model.add(Dropout(0.2))  # hard-coded dropout
 
     # Output layer.
     model.add(Dense(nb_classes, activation='softmax'))

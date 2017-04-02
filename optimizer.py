@@ -14,19 +14,20 @@ from network import Network
 class Optimizer():
     """Class that implements genetic algorithm for MLP optimization."""
 
-    def __init__(self, neuron_choices, retain=0.6, random_select=0.05,
-                 mutate_chance=0.005):
+    def __init__(self, neuron_choices, max_layers, retain=0.6, 
+                 random_select=0.05, mutate_chance=0.005):
         """Create an optimizer with default options."""
         self.mutate_chance = mutate_chance
         self.random_select = random_select
         self.retain = retain
         self.neuron_choices = neuron_choices
+        self.max_layers = max_layers
 
     def create_population(self, count):
         """Create a population of random networks."""
         pop = []
         for _ in range(0, count):
-            network = Network(self.neuron_choices)
+            network = Network(self.neuron_choices, self.max_layers)
             network.create_random_network()
             pop.append(network)
         return pop
@@ -63,7 +64,7 @@ class Optimizer():
                     child.append(father.network[min(i, father_depth-1)])
 
             # Now create a network object.
-            network = Network(self.neuron_choices)
+            network = Network(self.neuron_choices, self.max_layers)
             network.create_set_network(child)
 
             children.append(network)
