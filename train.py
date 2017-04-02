@@ -36,29 +36,35 @@ def compile_model(network):
     """Compile a sequential model.
 
     Args:
-        network (list): a list of layers.
+        network (dict): the parameters of the network
 
     Returns:
         a compiled network.
 
     """
+    # Get our network parameters.
+    nb_layers = network['nb_layers']
+    nb_neurons = network['nb_neurons']
+    activation = network['activation']
+    optimizer = network['optimizer']
+
     model = Sequential()
 
     # Add each layer.
-    for i, neurons in enumerate(network):
+    for i in range(nb_layers):
 
         # Need input shape for first layer.
         if i == 0:
-            model.add(Dense(neurons, activation='relu', input_shape=input_shape))
+            model.add(Dense(nb_neurons, activation=activation, input_shape=input_shape))
         else:
-            model.add(Dense(neurons, activation='relu'))
+            model.add(Dense(nb_neurons, activation=activation))
 
         model.add(Dropout(0.2))  # hard-coded dropout
 
     # Output layer.
     model.add(Dense(nb_classes, activation='softmax'))
 
-    model.compile(loss='categorical_crossentropy', optimizer='adam',
+    model.compile(loss='categorical_crossentropy', optimizer=optimizer,
                   metrics=['accuracy'])
 
     return model

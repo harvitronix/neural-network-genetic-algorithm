@@ -13,22 +13,25 @@ from network import Network
 class Optimizer():
     """Class that implements genetic algorithm for MLP optimization."""
 
-    def __init__(self, neuron_choices, max_layers, retain=0.6,
+    def __init__(self, nn_params, retain=0.6,
                  random_select=0.05, mutate_chance=0.005):
         """Create an optimizer with default options."""
         self.mutate_chance = mutate_chance
         self.random_select = random_select
         self.retain = retain
-        self.neuron_choices = neuron_choices
-        self.max_layers = max_layers
+        self.nn_params = nn_params
 
     def create_population(self, count):
         """Create a population of random networks."""
         pop = []
         for _ in range(0, count):
-            network = Network(self.neuron_choices, self.max_layers)
+            # Create a random network.
+            network = Network(self.nn_params)
             network.create_random()
+
+            # Add the network to our population.
             pop.append(network)
+
         return pop
 
     @staticmethod
@@ -43,28 +46,19 @@ class Optimizer():
 
     def breed(self, mother, father):
         """Make two children as parts of their parents."""
-        mother_depth = len(mother.network)
-        father_depth = len(father.network)
-
-        # We'll create two children.
         children = []
         for _ in range(2):
 
-            # Randomly choose one of the depths.
-            child_depth = random.choice([mother_depth, father_depth])
+            child = {}
 
-            # Now breed the widths.
-            child = []
-            for i in range(child_depth):
-                # Randomly get mother or father for this layer.
-                if random.random() > 0.5:
-                    # Use the min of i and the last layer.
-                    child.append(mother.network[min(i, mother_depth-1)])
-                else:
-                    child.append(father.network[min(i, father_depth-1)])
+            # Loop through the parameters and pick params for the kid.
+            for param in ['nb_layers', 'nb_neurons', 'activation', 'optimizer']:
+                child[param] = random.choice(
+                    [mother.network[param], father.network[param]]
+                )
 
             # Now create a network object.
-            network = Network(self.neuron_choices, self.max_layers)
+            network = Network(self.nn_params)
             network.create_set(child)
 
             children.append(network)
@@ -73,10 +67,15 @@ class Optimizer():
 
     def mutate(self, network):
         """Randomly mutate one part of the network."""
-        random_layer = random.randint(0, len(network.network) - 1)
 
-        # Update one layer with a random neuron count.
-        network.network[random_layer] = random.choice(self.neuron_choices)
+        options = ['nb_layers', 'nb_neurons', 'activation', 'optimizer']
+        mutation = random.choice(options)
+
+        # Mutate one of the params.
+        if mutation == 'nb_neurons':
+            network.network[mutation] = random.randint(1, self.nn_params['max_layers'])
+        else:
+            network.network[mutation] = random.choice(self.nn_params[mutation])
 
         return network
 

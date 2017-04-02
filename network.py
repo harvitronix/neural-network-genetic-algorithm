@@ -8,31 +8,43 @@ class Network():
     Currently only works for an MLP.
     """
 
-    def __init__(self, neuron_choices, max_layers=4):
+    def __init__(self, nn_params):
         """Initialize our network.
 
         Args:
-            neuron_choices (list): List of available layer widths
-                For example, [24, 32, 512, 1024]
-            max_layers (int): Maximum depth of the network
-
+            nn_params (dict): Parameters for the network.
+                Should include:
+                neuron_choices (list): example [64, 128, 256]
+                max_layers (int): ie 4 = 4 layers plus output
+                activations (list): ie ['relu', 'elu']
+                optimizers (list) ie ['rmsprop', 'adam']
         """
         self.accuracy = 0.
-        self.neuron_choices = neuron_choices
-        self.max_layers = max_layers
-        self.network = []  # (list): represents MLP network
+        self.nn_params = nn_params
+        self.network = {}  # (dic): represents MLP network parameters
 
     def create_random(self):
         """Create a random network."""
 
-        # Start with random number of layers.
-        nb_layers = random.randint(1, self.max_layers)
+        # Get number of layers.
+        nb_layers = random.randint(1, self.nn_params['max_layers'])
 
         # Get a random number of neurons for the layers.
-        nb_neurons = random.choice(self.neuron_choices)
+        nb_neurons = random.choice(self.nn_params['neuron_choices'])
 
-        # Now build our network list.
-        self.network = [nb_neurons for _ in range(nb_layers)]
+        # Choose an activation.
+        activation = random.choice(self.nn_params['activations'])
+
+        # Choose an optimizer.
+        optimizer = random.choice(self.nn_params['optimizers'])
+
+        # Now build our network.
+        self.network = {
+            'nb_layers': nb_layers,
+            'nb_neurons': nb_neurons,
+            'activation': activation,
+            'optimizer': optimizer,
+        }
 
     def create_set(self, network):
         """Set network properties.
