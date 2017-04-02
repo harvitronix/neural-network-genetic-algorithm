@@ -89,8 +89,9 @@ def main():
     nn_params = {
         'neuron_choices': [64, 128, 256, 512, 768, 1024],
         'max_layers': 4,
-        'activations': ['relu', 'elu'],
-        'optimizers': ['rmsprop', 'adam'],
+        'activations': ['relu', 'elu', 'tanh', 'sigmoid'],
+        'optimizers': ['rmsprop', 'adam', 'sgd', 'adagrad',
+                       'adadelta', 'adamax', 'nadam'],
     }
 
     print("***Evolving %d generations with population %d***" %
