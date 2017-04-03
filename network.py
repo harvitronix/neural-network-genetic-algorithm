@@ -1,5 +1,6 @@
 """Class that represents the network to be evolved."""
 import random
+import logging
 from train import train_and_score
 
 class Network():
@@ -48,5 +49,5 @@ class Network():
 
     def print(self):
         """Print out a network."""
-        print(self.network)
-        print("Network accuracy: %.2f%%" % (self.accuracy * 100))
+        logging.info(self.network)
+        logging.info("Network accuracy: %.2f%%" % (self.accuracy * 100))

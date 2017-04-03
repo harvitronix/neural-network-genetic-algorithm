@@ -1,6 +1,15 @@
 """Entry point to evolving the neural network. Start here."""
+import logging
 from optimizer import Optimizer
 from tqdm import tqdm
+
+# Setup logging.
+logging.basicConfig(
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%m/%d/%Y %I:%M:%S %p',
+    level=logging.DEBUG
+    #filename='log.txt'
+)
 
 def train_networks(networks, dataset):
     """Train each network.
@@ -12,7 +21,7 @@ def train_networks(networks, dataset):
     pbar = tqdm(total=len(networks))
     for network in networks:
         network.train(dataset)
-        network.print()
+        #network.print()
         pbar.update(1)
     pbar.close()
 
@@ -47,7 +56,7 @@ def generate(generations, population, nn_param_choices, dataset):
 
     # Evolve the generation.
     for i in range(generations):
-        print("***Doing generation %d of %d***" %
+        logging.info("***Doing generation %d of %d***" %
               (i + 1, generations))
 
         # Train and get accuracy for networks.
@@ -57,8 +66,8 @@ def generate(generations, population, nn_param_choices, dataset):
         average_accuracy = get_average_accuracy(networks)
 
         # Print out the average accuracy each generation.
-        print("Generation average: %.2f%%" % (average_accuracy * 100))
-        print('-'*80)
+        logging.info("Generation average: %.2f%%" % (average_accuracy * 100))
+        logging.info('-'*80)
 
         # Evolve, except on the last iteration.
         if i != generations - 1:
@@ -78,15 +87,15 @@ def print_networks(networks):
         networks (list): The population of networks
 
     """
-    print('-'*80)
+    logging.info('-'*80)
     for network in networks:
         network.print()
 
 def main():
     """Evolve a network."""
-    generations = 5  # Number of times to evole the population.
-    population = 20  # Number of networks in each generation.
-    dataset = 'cifar10'
+    generations = 2  # Number of times to evole the population.
+    population = 6  # Number of networks in each generation.
+    dataset = 'mnist'
 
     nn_param_choices = {
         'nb_neurons': [64, 128, 256, 512, 768, 1024],
@@ -96,7 +105,7 @@ def main():
                        'adadelta', 'adamax', 'nadam'],
     }
 
-    print("***Evolving %d generations with population %d***" %
+    logging.info("***Evolving %d generations with population %d***" %
           (generations, population))
 
     generate(generations, population, nn_param_choices, dataset)
