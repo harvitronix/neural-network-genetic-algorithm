@@ -8,43 +8,24 @@ class Network():
     Currently only works for an MLP.
     """
 
-    def __init__(self, nn_params):
+    def __init__(self, nn_param_choices):
         """Initialize our network.
 
         Args:
-            nn_params (dict): Parameters for the network.
-                Should include:
-                neuron_choices (list): example [64, 128, 256]
-                max_layers (int): ie 4 = 4 layers plus output
-                activations (list): ie ['relu', 'elu']
-                optimizers (list) ie ['rmsprop', 'adam']
+            nn_param_choices (dict): Parameters for the network, includes:
+                neuron_choices (list): [64, 128, 256]
+                max_layers (list): [1, 2, 3, 4]
+                activation (list): ['relu', 'elu']
+                optimizer (list): ['rmsprop', 'adam']
         """
         self.accuracy = 0.
-        self.nn_params = nn_params
+        self.nn_param_choices = nn_param_choices
         self.network = {}  # (dic): represents MLP network parameters
 
     def create_random(self):
         """Create a random network."""
-
-        # Get number of layers.
-        nb_layers = random.randint(1, self.nn_params['max_layers'])
-
-        # Get a random number of neurons for the layers.
-        nb_neurons = random.choice(self.nn_params['neuron_choices'])
-
-        # Choose an activation.
-        activation = random.choice(self.nn_params['activations'])
-
-        # Choose an optimizer.
-        optimizer = random.choice(self.nn_params['optimizers'])
-
-        # Now build our network.
-        self.network = {
-            'nb_layers': nb_layers,
-            'nb_neurons': nb_neurons,
-            'activation': activation,
-            'optimizer': optimizer,
-        }
+        for key in self.nn_param_choices:
+            self.network[key] = random.choice(self.nn_param_choices[key])
 
     def create_set(self, network):
         """Set network properties.

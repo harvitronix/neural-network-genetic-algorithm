@@ -13,20 +13,20 @@ from network import Network
 class Optimizer():
     """Class that implements genetic algorithm for MLP optimization."""
 
-    def __init__(self, nn_params, retain=0.6,
-                 random_select=0.05, mutate_chance=0.005):
+    def __init__(self, nn_param_choices, retain=0.6,
+                 random_select=0.1, mutate_chance=0.1):
         """Create an optimizer with default options."""
         self.mutate_chance = mutate_chance
         self.random_select = random_select
         self.retain = retain
-        self.nn_params = nn_params
+        self.nn_param_choices = nn_param_choices
 
     def create_population(self, count):
         """Create a population of random networks."""
         pop = []
         for _ in range(0, count):
             # Create a random network.
-            network = Network(self.nn_params)
+            network = Network(self.nn_param_choices)
             network.create_random()
 
             # Add the network to our population.
@@ -52,13 +52,13 @@ class Optimizer():
             child = {}
 
             # Loop through the parameters and pick params for the kid.
-            for param in ['nb_layers', 'nb_neurons', 'activation', 'optimizer']:
+            for key in self.nn_param_choices:
                 child[param] = random.choice(
                     [mother.network[param], father.network[param]]
                 )
 
             # Now create a network object.
-            network = Network(self.nn_params)
+            network = Network(self.nn_param_choices)
             network.create_set(child)
 
             children.append(network)
@@ -68,14 +68,11 @@ class Optimizer():
     def mutate(self, network):
         """Randomly mutate one part of the network."""
 
-        options = ['nb_layers', 'nb_neurons', 'activation', 'optimizer']
-        mutation = random.choice(options)
+        # Choose a random key.
+        mutation = random.choice(self.nn_param_choices)
 
         # Mutate one of the params.
-        if mutation == 'nb_neurons':
-            network.network[mutation] = random.randint(1, self.nn_params['max_layers'])
-        else:
-            network.network[mutation] = random.choice(self.nn_params[mutation])
+        network.network[mutation] = random.choice(self.nn_param_choices[mutation])
 
         return network
 

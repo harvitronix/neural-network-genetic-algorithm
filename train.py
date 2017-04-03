@@ -102,7 +102,7 @@ def train_and_score(network):
         network (list): a list of layers.
 
     """
-    nb_classes, batch_size, input_shape, x_train, x_test, y_train, y_test = get_cifar10()
+    nb_classes, batch_size, input_shape, x_train, x_test, y_train, y_test = get_mnist()
 
     model = compile_model(network, nb_classes, input_shape)
 
@@ -114,8 +114,5 @@ def train_and_score(network):
               callbacks=[early_stopper])
 
     score = model.evaluate(x_test, y_test, verbose=0)
-
-    #print(network)
-    #print("Test accuracy: %.2f%%" % (score[1] * 100))
 
     return score[1]  # 1 is accuracy. 0 is loss.
