@@ -2,16 +2,16 @@
 from optimizer import Optimizer
 from tqdm import tqdm
 
-def train_networks(networks):
+def train_networks(networks, dataset):
     """Train each network.
 
     Args:
-        networks (list): Current population of networks.
-
+        networks (list): Current population of networks
+        dataset (str): Dataset to use for training/evaluating
     """
     pbar = tqdm(total=len(networks))
     for network in networks:
-        network.train()
+        network.train(dataset)
         network.print()
         pbar.update(1)
     pbar.close()
@@ -20,7 +20,7 @@ def get_average_accuracy(networks):
     """Get the average accuracy for a group of networks.
 
     Args:
-        networks (list): List of networks.
+        networks (list): List of networks
 
     Returns:
         float: The average accuracy of a population of networks.
@@ -32,12 +32,14 @@ def get_average_accuracy(networks):
 
     return total_accuracy / len(networks)
 
-def generate(generations, population, nn_param_choices):
+def generate(generations, population, nn_param_choices, dataset):
     """Generate a network with the genetic algorithm.
 
     Args:
-        generations (int): Number of times to evole the population.
-        population (int): Number of networks in each generation.
+        generations (int): Number of times to evole the population
+        population (int): Number of networks in each generation
+        nn_param_choices (dict): Parameter choices for networks
+        dataset (str): Dataset to use for training/evaluating
 
     """
     optimizer = Optimizer(nn_param_choices)
@@ -49,7 +51,7 @@ def generate(generations, population, nn_param_choices):
               (i + 1, generations))
 
         # Train and get accuracy for networks.
-        train_networks(networks)
+        train_networks(networks, dataset)
 
         # Get the average accuracy for this generation.
         average_accuracy = get_average_accuracy(networks)
@@ -73,7 +75,7 @@ def print_networks(networks):
     """Print a list of networks.
 
     Args:
-        networks (list of lists): A list of networks.
+        networks (list): The population of networks
 
     """
     print('-'*80)
@@ -84,6 +86,7 @@ def main():
     """Evolve a network."""
     generations = 5  # Number of times to evole the population.
     population = 20  # Number of networks in each generation.
+    dataset = 'cifar10'
 
     nn_param_choices = {
         'nb_neurons': [64, 128, 256, 512, 768, 1024],
@@ -96,7 +99,7 @@ def main():
     print("***Evolving %d generations with population %d***" %
           (generations, population))
 
-    generate(generations, population, nn_param_choices)
+    generate(generations, population, nn_param_choices, dataset)
 
 if __name__ == '__main__':
     main()

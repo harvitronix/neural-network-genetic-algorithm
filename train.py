@@ -95,14 +95,20 @@ def compile_model(network, nb_classes, input_shape):
 
     return model
 
-def train_and_score(network):
+def train_and_score(network, dataset):
     """Train the model, return test loss.
 
     Args:
         network (list): a list of layers.
+        dataset (str): Dataset to use for training/evaluating
 
     """
-    nb_classes, batch_size, input_shape, x_train, x_test, y_train, y_test = get_mnist()
+    if dataset == 'cifar10':
+        nb_classes, batch_size, input_shape, x_train, \
+            x_test, y_train, y_test = get_cifar10()
+    elif dataset == 'mnist':
+        nb_classes, batch_size, input_shape, x_train, \
+            x_test, y_train, y_test = get_mnist()
 
     model = compile_model(network, nb_classes, input_shape)
 

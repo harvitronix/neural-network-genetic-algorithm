@@ -13,8 +13,8 @@ class Network():
 
         Args:
             nn_param_choices (dict): Parameters for the network, includes:
-                neuron_choices (list): [64, 128, 256]
-                max_layers (list): [1, 2, 3, 4]
+                nb_neurons (list): [64, 128, 256]
+                nb_layers (list): [1, 2, 3, 4]
                 activation (list): ['relu', 'elu']
                 optimizer (list): ['rmsprop', 'adam']
         """
@@ -31,15 +31,20 @@ class Network():
         """Set network properties.
 
         Args:
-            network (list): List of neurons per layer.
+            network (dict): The network parameters
 
         """
         self.network = network
 
-    def train(self):
-        """Train the network and record the accuracy."""
+    def train(self, dataset):
+        """Train the network and record the accuracy.
+        
+        Args:
+            dataset (str): Name of dataset to use.
+
+        """
         if self.accuracy == 0.:
-            self.accuracy = train_and_score(self.network)
+            self.accuracy = train_and_score(self.network, dataset)
 
     def print(self):
         """Print out a network."""
