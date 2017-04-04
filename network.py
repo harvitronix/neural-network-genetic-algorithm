@@ -9,7 +9,7 @@ class Network():
     Currently only works for an MLP.
     """
 
-    def __init__(self, nn_param_choices):
+    def __init__(self, nn_param_choices=None):
         """Initialize our network.
 
         Args:
