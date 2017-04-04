@@ -9,8 +9,8 @@ from tqdm import tqdm
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%m/%d/%Y %I:%M:%S %p',
-    level=logging.DEBUG
-    #filename='brute-log.txt'
+    level=logging.DEBUG,
+    filename='brute-log.txt'
 )
 
 def train_networks(networks, dataset):
@@ -79,7 +79,7 @@ def generate_network_list(nn_param_choices):
 
 def main():
     """Brute force test every network."""
-    dataset = 'mnist'
+    dataset = 'cifar10'
 
     nn_param_choices = {
         'nb_neurons': [64, 128, 256, 512, 768, 1024],
