@@ -1,4 +1,4 @@
-"""Iterate over every combination of networks."""
+"""Iterate over every combination of hyperparameters."""
 import logging
 import itertools
 from optimizer import Optimizer
@@ -62,6 +62,7 @@ def generate_network_list(nn_param_choices):
             for a in nn_param_choices['activation']:
                 for o in nn_param_choices['optimizer']:
 
+                    # Set the parameters.
                     network = {
                         'nb_neurons': nbn,
                         'nb_layers': nbl,
@@ -69,12 +70,12 @@ def generate_network_list(nn_param_choices):
                         'optimizer': o,
                     }
 
+                    # Instantiate a network object with set parameters.
                     network_obj = Network()
                     network_obj.create_set(network)
 
                     networks.append(network_obj)
 
-    print(len(networks))
     return networks
 
 def main():
