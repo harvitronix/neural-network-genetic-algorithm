@@ -8,3 +8,15 @@ On the easy MNIST dataset, we are able to quickly find a network that reaches > 
 
 For more, see this blog post: 
 https://medium.com/@harvitronix/lets-evolve-a-neural-network-with-a-genetic-algorithm-code-included-8809bece164
+
+## To run
+
+To run the brute force algorithm:
+
+```python3 brute.py```
+
+To run the genetic algorithm:
+
+```python3 main.py```
+
+You can set your network parameter choices by editing each of those files first. You can also choose whether to use the MNIST or CIFAR10 datasets. Simply set `dataset` to either `mnist` or `cifar10`.
