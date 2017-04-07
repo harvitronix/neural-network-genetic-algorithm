@@ -39,7 +39,7 @@ class Network():
 
     def train(self, dataset):
         """Train the network and record the accuracy.
-        
+
         Args:
             dataset (str): Name of dataset to use.
 
@@ -47,7 +47,7 @@ class Network():
         if self.accuracy == 0.:
             self.accuracy = train_and_score(self.network, dataset)
 
-    def print(self):
+    def print_network(self):
         """Print out a network."""
         logging.info(self.network)
         logging.info("Network accuracy: %.2f%%" % (self.accuracy * 100))

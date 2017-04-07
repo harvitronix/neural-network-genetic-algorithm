@@ -7,8 +7,8 @@ from tqdm import tqdm
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%m/%d/%Y %I:%M:%S %p',
-    level=logging.DEBUG
-    #filename='log.txt'
+    level=logging.DEBUG,
+    filename='log.txt'
 )
 
 def train_networks(networks, dataset):
@@ -21,7 +21,6 @@ def train_networks(networks, dataset):
     pbar = tqdm(total=len(networks))
     for network in networks:
         network.train(dataset)
-        #network.print()
         pbar.update(1)
     pbar.close()
 
@@ -57,7 +56,7 @@ def generate(generations, population, nn_param_choices, dataset):
     # Evolve the generation.
     for i in range(generations):
         logging.info("***Doing generation %d of %d***" %
-              (i + 1, generations))
+                     (i + 1, generations))
 
         # Train and get accuracy for networks.
         train_networks(networks, dataset)
@@ -89,24 +88,24 @@ def print_networks(networks):
     """
     logging.info('-'*80)
     for network in networks:
-        network.print()
+        network.print_network()
 
 def main():
     """Evolve a network."""
-    generations = 2  # Number of times to evole the population.
-    population = 6  # Number of networks in each generation.
-    dataset = 'mnist'
+    generations = 10  # Number of times to evole the population.
+    population = 20  # Number of networks in each generation.
+    dataset = 'cifar10'
 
     nn_param_choices = {
         'nb_neurons': [64, 128, 256, 512, 768, 1024],
         'nb_layers': [1, 2, 3, 4],
         'activation': ['relu', 'elu', 'tanh', 'sigmoid'],
         'optimizer': ['rmsprop', 'adam', 'sgd', 'adagrad',
-                       'adadelta', 'adamax', 'nadam'],
+                      'adadelta', 'adamax', 'nadam'],
     }
 
     logging.info("***Evolving %d generations with population %d***" %
-          (generations, population))
+                 (generations, population))
 
     generate(generations, population, nn_param_choices, dataset)
 

@@ -1,7 +1,5 @@
 """Iterate over every combination of hyperparameters."""
 import logging
-import itertools
-from optimizer import Optimizer
 from network import Network
 from tqdm import tqdm
 
@@ -23,7 +21,7 @@ def train_networks(networks, dataset):
     pbar = tqdm(total=len(networks))
     for network in networks:
         network.train(dataset)
-        network.print()
+        network.print_network()
         pbar.update(1)
     pbar.close()
 
@@ -42,7 +40,7 @@ def print_networks(networks):
     """
     logging.info('-'*80)
     for network in networks:
-        network.print()
+        network.print_network()
 
 def generate_network_list(nn_param_choices):
     """Generate a list of all possible networks.
@@ -87,7 +85,7 @@ def main():
         'nb_layers': [1, 2, 3, 4],
         'activation': ['relu', 'elu', 'tanh', 'sigmoid'],
         'optimizer': ['rmsprop', 'adam', 'sgd', 'adagrad',
-                       'adadelta', 'adamax', 'nadam'],
+                      'adadelta', 'adamax', 'nadam'],
     }
 
     logging.info("***Brute forcing networks***")

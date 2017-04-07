@@ -25,7 +25,7 @@ class Optimizer():
                 remaining in the population
             mutate_chance (float): Probability a network will be
                 randomly mutated
-        
+
         """
         self.mutate_chance = mutate_chance
         self.random_select = random_select
@@ -34,10 +34,13 @@ class Optimizer():
 
     def create_population(self, count):
         """Create a population of random networks.
-        
+
         Args:
             count (int): Number of networks to generate, aka the
                 size of the population
+
+        Returns:
+            (list): Population of network objects
 
         """
         pop = []
@@ -58,9 +61,12 @@ class Optimizer():
 
     def grade(self, pop):
         """Find average fitness for a population.
-        
+
         Args:
             pop (list): The population of networks
+
+        Returns:
+            (float): The average accuracy of the population
 
         """
         summed = reduce(add, (self.fitness(network) for network in pop))
@@ -68,10 +74,13 @@ class Optimizer():
 
     def breed(self, mother, father):
         """Make two children as parts of their parents.
-        
+
         Args:
             mother (dict): Network parameters
             father (dict): Network parameters
+
+        Returns:
+            (list): Two network objects
 
         """
         children = []
@@ -95,9 +104,12 @@ class Optimizer():
 
     def mutate(self, network):
         """Randomly mutate one part of the network.
-        
+
         Args:
             network (dict): The network parameters to mutate
+
+        Returns:
+            (Network): A randomly mutated network object
 
         """
         # Choose a random key.
@@ -110,9 +122,13 @@ class Optimizer():
 
     def evolve(self, pop):
         """Evolve a population of networks.
-        
+
         Args:
             pop (list): A list of network parameters
+
+        Returns:
+            (list): The evolved population of networks
+
         """
         # Get scores for each network.
         graded = [(self.fitness(network), network) for network in pop]
