@@ -99,7 +99,7 @@ def train_and_score(network, dataset):
     """Train the model, return test loss.
 
     Args:
-        network (list): a list of layers.
+        network (dict): the parameters of the network
         dataset (str): Dataset to use for training/evaluating
 
     """
