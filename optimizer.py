@@ -98,6 +98,10 @@ class Optimizer():
             network = Network(self.nn_param_choices)
             network.create_set(child)
 
+            # Randomly mutate some of the children.
+            if self.mutate_chance > random.random():
+                network = self.mutate(network)
+
             children.append(network)
 
         return children
@@ -146,11 +150,6 @@ class Optimizer():
         for individual in graded[retain_length:]:
             if self.random_select > random.random():
                 parents.append(individual)
-
-        # Randomly mutate some of the networks we're keeping.
-        for individual in parents:
-            if self.mutate_chance > random.random():
-                individual = self.mutate(individual)
 
         # Now find out how many spots we have left to fill.
         parents_length = len(parents)
