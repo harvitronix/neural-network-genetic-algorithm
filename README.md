@@ -9,6 +9,8 @@ On the easy MNIST dataset, we are able to quickly find a network that reaches > 
 For more, see this blog post: 
 https://medium.com/@harvitronix/lets-evolve-a-neural-network-with-a-genetic-algorithm-code-included-8809bece164
 
+For a more robust implementation that you can use in your projects, take a look at (Jan Liphardt's implementation, DeepEvolve)[https://github.com/jliphard/DeepEvolve].
+
 ## To run
 
 To run the brute force algorithm:
